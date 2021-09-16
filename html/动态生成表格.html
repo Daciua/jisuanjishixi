@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>动态生成表格 购物车</title>
+    <style>
+        table {
+            width: 500px;
+            margin: 100px auto;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        
+        td,
+        th {
+            border: 1px solid #333;
+        }
+        
+        thead tr {
+            height: 40px;
+            background-color: #ccc;
+        }
+        
+        p {
+            font-size: 40px;
+            position: absolute;
+            left: 697px;
+            top: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <p>购物车</p>
+    <table cellspacing="0">
+        <thead>
+            <tr>
+                <th>名子</th>
+                <th>名目</th>
+                <th>价格</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        // 学生数据
+        var dates = [{
+            name: '小米手机',
+            subject: '新品',
+            score: 5200,
+        }, {
+            name: '小米手机',
+            subject: '新品',
+            score: 10000,
+        }, {
+            name: '小米手机',
+            subject: '新品',
+            score: 9800,
+        }, {
+            name: '小米手机',
+            subject: '新品',
+            score: 9900,
+        }, {
+            name: '小米手机',
+            subject: '新品',
+            score: 5120,
+        }];
+        var tbody = document.querySelector('tbody');
+        // 1. 在 tbody 内创建行，每一行存放一个对象，共 dates.length 行。
+        for (var i = 0; i < dates.length; i++) {
+            var tr = document.createElement('tr');
+            tbody.appendChild(tr);
+            // 2. 在行内创建单元格 每行单元格数量等于一个对象属性数量
+            // 第二层for循环后 k得到的是属性名，dates[i][k]得到的是属性值
+            for (var k in dates[i]) {
+                // 循环的次数为属性个数   dates[i]即为循环的次数
+                var td = document.createElement('td'); // 创建单元格
+                tr.appendChild(td); // 添加单元格
+                td.innerHTML = dates[i][k]; // 将属性值存进单元格 
+                // 开始不明白怎么保证的每个属性值都赋值给新的td ，最后我认为是将第i行k列的属性值 放进了 第i行k列的td中，每个td都是与接收的属性值对应的。
+            }
+            // 3. 创建独立的 删除功能单元格
+            var td = document.createElement('td');
+            tr.appendChild(td);
+            td.innerHTML = '<a href="javascript:;">删除</a>'
+        }
+        // 4. 表格创建完毕 开始实现删除功能
+        // 点击删除 需要删除的是 行tr  tr为tbody子元素 需要获取tbody
+        var tbody = document.querySelector('tbody');
+        // 获取执行删除的a
+        var as = document.querySelectorAll('a');
+        for (var i = 0; i < as.length; i++) {
+            as[i].onclick = function() {
+                // this.parentNode.parentNode 指的就是 tr
+                tbody.removeChild(this.parentNode.parentNode);
+            }
+        }
+    </script>
+</body>
+
+</html>
